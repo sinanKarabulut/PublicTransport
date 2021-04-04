@@ -1,0 +1,36 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.simsoft'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    implementation group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.4.30.Final'
+    implementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+    implementation group: 'net.sf.json-lib', name: 'json-lib', version: '2.4',classifier: 'jdk15'
+    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.5'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.30.Final'
+    implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.5'
+    implementation group: 'org.apache.tomcat', name: 'tomcat-dbcp', version: '10.0.4'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.4'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.0.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.4'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+}
+
+test {
+    useJUnitPlatform()
+}
