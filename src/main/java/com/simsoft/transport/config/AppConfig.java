@@ -19,7 +19,7 @@ import org.springframework.core.io.Resource;
 
 @Configuration
 public class AppConfig {
-    @Bean(name="repositoryPopulator")
+   /* @Bean(name="repositoryPopulator")
     public Jackson2RepositoryPopulatorFactoryBean repositoryPopulator() {
         Resource sourceData = new ClassPathResource("data/project.json");
 
@@ -27,7 +27,7 @@ public class AppConfig {
         // Set a custom ObjectMapper if Jackson customization is needed
         factory.setResources(new Resource[] { sourceData });
         return factory;
-    }
+    }*/
 
 /*
     @Bean

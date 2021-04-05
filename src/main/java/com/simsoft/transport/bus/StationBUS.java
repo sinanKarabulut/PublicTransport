@@ -8,6 +8,7 @@ import com.simsoft.transport.model.Vehicle;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class StationBUS implements IStationBUS{
     }
 
     @Override
+    @Transactional(readOnly = false)
     public JSONObject saveOrUpdateStation(StationDTO stationDTO, Long id) throws Exception {
         JSONObject sendJSON = new JSONObject();
 
@@ -50,6 +52,7 @@ public class StationBUS implements IStationBUS{
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean delete(Long id) throws Exception {
         Station station = stationDAO.getCurrentSession().load(Station.class,id);
         station.setStatu(false);
