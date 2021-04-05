@@ -4,6 +4,7 @@ import com.simsoft.transport.dao.RouteDAO;
 import com.simsoft.transport.dao.StationDAO;
 import com.simsoft.transport.dto.RouteDTO;
 import com.simsoft.transport.model.Route;
+import com.simsoft.transport.model.RouteStation;
 import com.simsoft.transport.model.Vehicle;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +40,26 @@ public class RouteBUS implements IRouteBUS{
             route = routeDAO.getCurrentSession().load(Route.class, id);
         }
 
-        route.setRouteGroup(routeDTO.getRouteGroup());
+        List<RouteStation> routeList = routeDAO.getRouteList(route.getRouteId());
+
+        for(RouteStation route1:routeList){
+            route1.setStatu(false);
+            routeDAO.getCurrentSession().saveOrUpdate(route1);
+        }
+
+        route.setRouteName(routeDTO.getRouteName());
         route.setStatu(true);
-        route.setRouteGroupName(routeDTO.getRouteGroupName());
-        route.setStation(routeDTO.getStation());
+
+        RouteStation routeStationObj=null;
+
+        for(RouteStation routeStation:routeDTO.getRouteStaion()){
+            routeStationObj = new RouteStation();
+
+            routeStationObj.setRouteId(routeStation.getRouteId());
+            routeStationObj.setStationId(routeStation.getStationId());
+            routeStationObj.setStatu(true);
+            routeDAO.getCurrentSession().saveOrUpdate(routeStationObj);
+        }
 
         routeDAO.getCurrentSession().saveOrUpdate(route);
         routeDAO.getCurrentSession().flush();

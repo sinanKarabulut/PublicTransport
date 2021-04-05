@@ -29,6 +29,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    //implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.5.2'
 }
 
 test {

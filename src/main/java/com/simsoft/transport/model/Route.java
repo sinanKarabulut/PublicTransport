@@ -1,20 +1,27 @@
 package com.simsoft.transport.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name="ROUTE")
 @DynamicInsert
 @DynamicUpdate
+@ToString
+@Data
+@NoArgsConstructor //boş bir constructure otomatik yapar
+@AllArgsConstructor
 public class Route  implements Serializable {
     private  long routeId;
-    private long routeGroup;
-    private String routeGroupName;
-    private Station station;
+    private String routeName;
     private boolean statu=true;
 
     @Id
@@ -27,16 +34,6 @@ public class Route  implements Serializable {
         this.routeId = routeId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "STATION_ID")
-    public Station getStation() {
-        return station;
-    }
-
-    public void setStation(Station station) {
-        this.station = station;
-    }
-
     @Column(name="STATU")
     public boolean isStatu() {
         return statu;
@@ -46,21 +43,12 @@ public class Route  implements Serializable {
         this.statu = statu;
     }
 
-    @Column(name="STATION_GROUP_ID")
-    public long getRouteGroup() {
-        return routeGroup;
+    @Column(name = "RouteName")
+    public String getRouteName() {
+        return routeName;
     }
 
-    public void setRouteGroup(long routeGroup) {
-        this.routeGroup = routeGroup;
-    }
-
-    @Column(name = "STATION_GROUP_NAME")
-    public String getRouteGroupName() {
-        return routeGroupName;
-    }
-
-    public void setRouteGroupName(String routeGroupName) {
-        this.routeGroupName = routeGroupName;
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
     }
 }

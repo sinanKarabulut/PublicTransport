@@ -1,5 +1,9 @@
 package com.simsoft.transport.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
@@ -9,6 +13,10 @@ import java.io.Serializable;
 @Table(name="VEHICLE")
 @DynamicInsert
 @DynamicUpdate
+@ToString
+@Data
+@NoArgsConstructor //boş bir constructure otomatik yapar
+@AllArgsConstructor
 public class Vehicle implements Serializable {
 
     private long vehicleId;

@@ -1,5 +1,6 @@
 package com.simsoft.transport.model;
 
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @Table(name="ROUTE_VEHICLE")
 @DynamicInsert
 @DynamicUpdate
+@ToString
 public class RouteVehicle  implements Serializable {
     private long routeVehicleId;
     private Vehicle vehicle;
