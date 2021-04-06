@@ -11,7 +11,7 @@ import java.util.Map;
 public class StationDAO extends BaseDAO {
 
     public List<JSONObject> getStationList(Map<String, String[]> requestMap) {
-        String hql = "from Station v where v.statu=true";
+        String hql = "from Station v where v.status=true";
 
         Query query = getCurrentSession().createQuery(hql.toString());
 

@@ -12,7 +12,7 @@ import java.util.Map;
 @Repository(value = "routeDAO")
 public class RouteDAO extends BaseDAO{
     public List<JSONObject> getRouteList(Map<String, String[]> requestMap) {
-        String hql = "from Route v where v.statu=true";
+        String hql = "from Route v where v.status=true";
 
         Query query = getCurrentSession().createQuery(hql.toString());
 
@@ -20,7 +20,7 @@ public class RouteDAO extends BaseDAO{
     }
 
     public List<RouteStation> getRouteList(Long roteId){
-        String hql = "from RouteStation v where v.statu=true and v.routeId=:roteId";
+        String hql = "from RouteStation v where v.status=true and v.routeId=:roteId";
 
         Query query = getCurrentSession().createQuery(hql.toString());
 

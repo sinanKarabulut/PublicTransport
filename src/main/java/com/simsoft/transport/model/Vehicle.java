@@ -1,84 +1,30 @@
 package com.simsoft.transport.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+@Entity // jpa annotation
 @Table(name="VEHICLE")
-@DynamicInsert
-@DynamicUpdate
-@ToString
 @Data
-@NoArgsConstructor //boş bir constructure otomatik yapar
-@AllArgsConstructor
-public class Vehicle implements Serializable {
-
-    private long vehicleId;
-    private String vehicleName;
-    private String plate;
-    private String model;
-    private Integer modelYear;
-    private boolean statu=true;
-
+public class Vehicle extends BaseEntity {
     @Id
     @Column(name = "VEHICLE_ID", unique = true, nullable = false, precision = 12, scale = 0)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(long vehicleId) {
-        this.vehicleId = vehicleId;
-    }
-
+    @GeneratedValue(strategy = GenerationType.AUTO,generator = "seq")
+    @GenericGenerator(name = "seq", strategy="increment")
+    private long vehicleId;
     @Column(name="VEHICLE_NAME")
-    public String getVehicleName() {
-        return vehicleName;
-    }
-
-    public void setVehicleName(String vehicleName) {
-        this.vehicleName = vehicleName;
-    }
-
+    private String vehicleName;
     @Column(name="PLATE")
-    public String getPlate() {
-        return plate;
-    }
-
-    public void setPlate(String plate) {
-        this.plate = plate;
-    }
-
-    @Column(name="STATU")
-    public boolean isStatu() {
-        return statu;
-    }
-
-    public void setStatu(boolean statu) {
-        this.statu = statu;
-    }
-
+    private String plate;
     @Column(name="MODEL")
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
+    private String model;
     @Column(name="MODEL_YEAR")
-    public Integer getModelYear() {
-        return modelYear;
-    }
+    private Integer modelYear;
 
-    public void setModelYear(Integer modelYear) {
-        this.modelYear = modelYear;
-    }
 }

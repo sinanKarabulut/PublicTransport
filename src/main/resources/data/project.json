@@ -3,13 +3,6 @@
     "_class": "com.simsoft.transport.model.Station",
     "stationName" : "Kızılay",
     "statu" : true
-  },
-  {
-    "_class": "com.simsoft.transport.model.Vehicle",
-    "vehicleName" : "V40",
-    "plate": "07 T 0070",
-    "model": "V40",
-    "modelYear" : "2020",
-    "statu" : true
   }
+
 ]

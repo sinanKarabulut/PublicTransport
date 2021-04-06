@@ -11,7 +11,7 @@ public class VehicleDAO extends BaseDAO {
 
     public List<JSONObject> getVehicleList(Map<String, String[]> requestMap) {
 
-        String hql = "from Vehicle v where v.statu=true";
+        String hql = "from Vehicle v where v.status=true";
 
         Query query = getCurrentSession().createQuery(hql.toString());
 

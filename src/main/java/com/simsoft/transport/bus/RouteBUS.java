@@ -43,12 +43,12 @@ public class RouteBUS implements IRouteBUS{
         List<RouteStation> routeList = routeDAO.getRouteList(route.getRouteId());
 
         for(RouteStation route1:routeList){
-            route1.setStatu(false);
+            route1.setStatus(false);
             routeDAO.getCurrentSession().saveOrUpdate(route1);
         }
 
         route.setRouteName(routeDTO.getRouteName());
-        route.setStatu(true);
+        route.setStatus(true);
 
         RouteStation routeStationObj=null;
 
@@ -57,7 +57,7 @@ public class RouteBUS implements IRouteBUS{
 
             routeStationObj.setRouteId(routeStation.getRouteId());
             routeStationObj.setStationId(routeStation.getStationId());
-            routeStationObj.setStatu(true);
+            routeStationObj.setStatus(true);
             routeDAO.getCurrentSession().saveOrUpdate(routeStationObj);
         }
 
@@ -70,7 +70,7 @@ public class RouteBUS implements IRouteBUS{
     @Override
     public boolean delete(Long id) throws Exception {
         Route route = routeDAO.getCurrentSession().load(Route.class, id);
-        route.setStatu(false);
+        route.setStatus(false);
 
         routeDAO.getCurrentSession().saveOrUpdate(route);
         return false;

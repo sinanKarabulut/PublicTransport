@@ -43,7 +43,7 @@ public class StationBUS implements IStationBUS{
         }
 
         station.setStationName(stationDTO.getStationName());
-        station.setStatu(true);
+        station.setStatus(true);
 
         stationDAO.getCurrentSession().saveOrUpdate(station);
         stationDAO.getCurrentSession().flush();
@@ -55,7 +55,7 @@ public class StationBUS implements IStationBUS{
     @Transactional(readOnly = false)
     public boolean delete(Long id) throws Exception {
         Station station = stationDAO.getCurrentSession().load(Station.class,id);
-        station.setStatu(false);
+        station.setStatus(false);
         stationDAO.getCurrentSession().saveOrUpdate(station);
 
         return  true;

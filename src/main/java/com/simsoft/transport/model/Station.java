@@ -1,49 +1,23 @@
 package com.simsoft.transport.model;
 
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+@Entity // jpa annotation
 @Table(name="STATION")
-@DynamicInsert
-@DynamicUpdate
-@ToString
-public class Station implements Serializable {
-
-    private long stationId;
-    private String stationName;
-    private boolean statu=true;
-
+@Data
+public class Station extends  BaseEntity {
     @Id
-    @Column(name = "STATION_ID", unique = true, nullable = false, precision = 12, scale = 0)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getStationId() {
-        return stationId;
-    }
-
-    public void setStationId(long stationId) {
-        this.stationId = stationId;
-    }
-
+    @GeneratedValue(strategy = GenerationType.AUTO,generator = "seq")
+    @GenericGenerator(name = "seq", strategy="increment")
+    @Column(name="STATION_ID")
+    private long stationId;
     @Column(name="STATION_NAME")
-    public String getStationName() {
-        return stationName;
-    }
-
-    public void setStationName(String stationName) {
-        this.stationName = stationName;
-    }
-
-    @Column(name="STATU")
-    public boolean isStatu() {
-        return statu;
-    }
-
-    public void setStatu(boolean statu) {
-        this.statu = statu;
-    }
+    private String stationName;
 }

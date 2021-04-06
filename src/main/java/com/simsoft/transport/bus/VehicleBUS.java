@@ -46,7 +46,7 @@ public class VehicleBUS implements IVehicleBUS {
 
         vehicle.setVehicleName(vehicleDTO.getVehicleName());
         vehicle.setPlate(vehicleDTO.getPlate());
-        vehicle.setStatu(true);
+        vehicle.setStatus(true);
 
         vehicleDAO.getCurrentSession().saveOrUpdate(vehicle);
         vehicleDAO.getCurrentSession().flush();
@@ -58,7 +58,7 @@ public class VehicleBUS implements IVehicleBUS {
     @Transactional(readOnly = false)
     public boolean delete(Long id) throws Exception {
         Vehicle vehicle = vehicleDAO.getCurrentSession().load(Vehicle.class, id);
-        vehicle.setStatu(false);
+        vehicle.setStatus(false);
         vehicleDAO.getCurrentSession().saveOrUpdate(vehicle);
 
         return true;
