@@ -18,4 +18,5 @@ public class RouteStationDTO {
     private List<Long> stationId;
     @ApiModelProperty(required = true,value = "Route ID")
     private Long routeId;
+
 }

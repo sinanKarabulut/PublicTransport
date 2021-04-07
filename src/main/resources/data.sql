@@ -18,3 +18,5 @@ insert into ROUTE_STATION(ROUTE_STATION_ID,STATION_ID,ROUTE_ID,STATUS) values(2,
 insert into ROUTE_STATION(ROUTE_STATION_ID,STATION_ID,ROUTE_ID,STATUS) values(3,5,3,true);
 
 insert into ROUTE_VEHICLE(ROUTE_VEHICLE_ID,VEHICLE_ID,ROUTE_ID,STATUS) values(1,1,3,true);
+
+insert into Users(Id,uname,pwd,name_surname,email,status) values(1,'simsoft','$2a$10$uq0TG9oZ8YzhIbGxeupMyOsHh56k7Ug4i8YyhOSysdiMhXHZIK4nK','simsoft','simsoft@simsoft.com',true);

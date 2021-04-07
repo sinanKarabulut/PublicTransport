@@ -1,6 +1,8 @@
 package com.simsoft.transport.config;
 
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +19,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 
-//@Configuration
 public class AppConfig {
+
     /*@Bean(name="repositoryPopulator")
     public Jackson2RepositoryPopulatorFactoryBean repositoryPopulator() {
         Resource sourceData = new ClassPathResource("data/project.json");
