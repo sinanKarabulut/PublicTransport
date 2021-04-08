@@ -41,4 +41,14 @@ public class UsersDAO extends BaseDAO {
         return (Users)query.uniqueResult();
     }
 
+    public List<Users> getByIds(long Id){
+        String sql="from Users us where us.status=true and us.id=:id";
+
+        Query query = getCurrentSession().createQuery(sql);
+
+        query.setLong("id",Id);
+
+        return query.list();
+    }
+
 }

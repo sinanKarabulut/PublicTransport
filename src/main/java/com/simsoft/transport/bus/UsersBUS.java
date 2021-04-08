@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,13 +25,10 @@ public class UsersBUS implements IUsersBUS{
     @Autowired
     private ModelMapper modelMapper;
 
-
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public UsersBUS(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-    //private final ModelMapper modelMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+   /* @Autowired
+    private  BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
     @Override
     public UsersDTO getAllUsers() throws Exception {
@@ -53,8 +51,8 @@ public class UsersBUS implements IUsersBUS{
         try {
             Users user = new Users();
             user.setEmail(registrationRequest.getEmail());
-            user.setNameSurname(registrationRequest.getNameSurname());
-            user.setPassword(bCryptPasswordEncoder.encode(registrationRequest.getPassword()));
+            user.setName(registrationRequest.getNameSurname());
+            user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             user.setUsername(registrationRequest.getUsername());
             usersDAO.getCurrentSession().save(user);
             return Boolean.TRUE;

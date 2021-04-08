@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import java.util.Map;
 @RestController(value = "vehicleController")
 @RequestMapping("/api/vehicle/*")
 @Api(value = "/api/vehicle", description =  "Vehicle APIs Document")
+
 @CrossOrigin
 public class VehicleController {
 
@@ -29,6 +31,7 @@ public class VehicleController {
 
     @ApiOperation(value ="Get Vehicle List",response = JSONObject.class)
     @GetMapping("/getVehicleList")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<JSONObject> getVehicleList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, String[]> requestMap = request.getParameterMap();
 
