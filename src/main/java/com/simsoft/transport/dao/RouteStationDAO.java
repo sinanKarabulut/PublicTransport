@@ -24,12 +24,25 @@ public class RouteStationDAO extends BaseDAO {
 
         return  query.list();
     }
-    public List<RouteStation> getRouteStationList(Long routeStationId){
-        String hql = "from RouteStation v where v.status=true and v.routeStationId=:routeStationId";
+    public List<RouteStation> getRouteStationList(Long routeStationId,Long routeId){
+        String hql = "from RouteStation v where v.status=true ";
+
+        if(routeStationId != null){
+            hql += "and v.routeStationId=:routeStationId";
+        }
+        if(routeId != null){
+            hql += " and v.stationId=:stationId";
+        }
 
         Query query = getCurrentSession().createQuery(hql.toString());
 
-        query.setLong("routeStationId",routeStationId);
+        if(routeStationId != null){
+            query.setLong("routeStationId",routeStationId);
+        }
+
+        if(routeId != null){
+            query.setLong("routeId",routeId);
+        }
 
         return  query.list();
     }

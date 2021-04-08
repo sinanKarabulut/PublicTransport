@@ -32,28 +32,30 @@ public class RouteStationBUS implements IRouteStationBUS {
     public JSONObject saveOrUpdateRouteStation(RouteStationDTO routeStationDTO, Long routeId) throws Exception {
         JSONObject sendJSON = new JSONObject();
 
-        /*RouteStation routeStation=null;
-        if(id == null){
-            routeStation = new RouteStation();
-        }else{
-            routeStation = routeStationDAO.getCurrentSession().load(RouteStation.class,routeId);
-            List<RouteStation> pasifYapilacak = routeStationDAO.getRouteStationList(routeStation.getRouteStationId());
-            for(RouteStation routeStation1: pasifYapilacak){
-                routeStation1.setStatus(false);
-                routeStationDAO.getCurrentSession().saveOrUpdate(routeStation1);
-            }
+        if(routeStationDTO.getStationId().size() < 1){
+            throw  new Exception("Birden çok rota seçilmelidir.!");
         }
 
+        if(routeId != null){
+            List<RouteStation> routeStationList = routeStationDAO.getRouteStationList(null,routeId);
 
+            if(routeStationList.size() > 0){
+                for(RouteStation routeStation:routeStationList){
+                    routeStation.setStatus(false);
+                    routeStationDAO.getCurrentSession().saveOrUpdate(routeStation);
+                }
+            }
+        }
+        RouteStation routeStation=null;
+        for(int i=0;i<routeStationDTO.getStationId().size();i++){
+            routeStation = new RouteStation();
+            routeStation.setStatus(true);
+            routeStation.setStationId(routeStationDTO.getStationId().get(i));
+            routeStation.setRouteId(routeStationDTO.getRouteId());
+            routeStationDAO.getCurrentSession().saveOrUpdate(routeStation);
 
-        routeStation.setStationId(routeStationDTO.getStationId());
-        routeStation.setRouteId(routeStationDTO.getRouteId());
-
-        routeStation.setStatus(true);
-
-        routeStationDAO.getCurrentSession().saveOrUpdate(routeStation);
-        routeStationDAO.getCurrentSession().flush();
-        sendJSON.put("success",true);*/
+        }
+        sendJSON.put("success",true);
         return  sendJSON;
     }
 
