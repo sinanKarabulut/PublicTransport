@@ -11,18 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RestController
-@RequestMapping("/api/token")
+@RequestMapping("/api/token/*")
 @Api(value = "/api/token", description = "Token APIs Document")
 public class AccountController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
     @Autowired
     private UsersBUS usersBUS;
     @Autowired
@@ -31,7 +34,9 @@ public class AccountController {
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ApiOperation(value = "/login", response = TokenResponse.class)
     public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest request) throws AuthenticationException {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        Authentication authentication =authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         final Users user = usersDAO.findByUsername(request.getUsername());
         final String token = jwtTokenUtil.generateToken(user);
         return ResponseEntity.ok(new TokenResponse(user.getUsername(), token));

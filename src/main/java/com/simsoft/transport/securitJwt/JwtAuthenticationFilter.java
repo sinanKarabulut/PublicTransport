@@ -1,10 +1,6 @@
 package com.simsoft.transport.securitJwt;
 
 import com.simsoft.transport.bus.UserDetailsServiceImpl;
-import com.simsoft.transport.bus.UsersBUS;
-import com.simsoft.transport.dao.UsersDAO;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +21,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
+@Service
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String HEADER_STRING = "Authorization";
+
     @Autowired
-    private JwtTokenProvider tokenProvider;
+    private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -36,16 +37,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         try {
-            String jwt = getJwtFromRequest(request);
+            String jwt = getJwtFromRequest(req);
+            if(jwt == null){
+                throw new Exception("Token Alınamamıştır.!");
+            }
+            String username = jwtTokenUtil.getUsernameFromToken(jwt);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-                Long userId = tokenProvider.getUserIdFromJWT(jwt);
-
-                UserDetails userDetails = userDetailsService.loadUserByIds(userId);
+            if (StringUtils.hasText(jwt) && jwtTokenUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
@@ -53,9 +56,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.error("Could not set user authentication in security context", ex);
         }
 
-        filterChain.doFilter(request, response);
-    }
+        chain.doFilter(req, res);
 
+    }
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

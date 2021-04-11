@@ -8,6 +8,7 @@ import com.simsoft.transport.model.Station;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -29,11 +30,12 @@ public class RouteStationBUS implements IRouteStationBUS {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public JSONObject saveOrUpdateRouteStation(RouteStationDTO routeStationDTO, Long routeId) throws Exception {
         JSONObject sendJSON = new JSONObject();
 
         if(routeStationDTO.getStationId().size() < 1){
-            throw  new Exception("Birden çok rota seçilmelidir.!");
+            throw  new Exception("Birden çok istasyon seçilmelidir.!");
         }
 
         if(routeId != null){
@@ -44,6 +46,11 @@ public class RouteStationBUS implements IRouteStationBUS {
                     routeStation.setStatus(false);
                     routeStationDAO.getCurrentSession().saveOrUpdate(routeStation);
                 }
+            }
+        }else{
+            List<RouteStation> routeStationList = routeStationDAO.getRouteStationList(null,routeId);
+            if(routeStationList != null && !routeStationList.isEmpty() && routeStationList.size() > 0){
+                throw new Exception("Rota daha önce oluşturulmuştur.!");
             }
         }
         RouteStation routeStation=null;
@@ -60,6 +67,7 @@ public class RouteStationBUS implements IRouteStationBUS {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean delete(Long id) throws Exception {
         RouteStation routeStation = routeStationDAO.getCurrentSession().load(RouteStation.class, id);
         routeStation.setStatus(false);

@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Map;
 
-@RestController(value = "routeStationController")
+@RestController
 @RequestMapping("/api/routeStation/*")
-@Api(value = "/api/routeStation", description = "Route Staion APIs Document")
+@Api(value = "/api/routeStation", description = "Route Station APIs Document")
 @CrossOrigin
 public class RouteStationController {
     @Autowired
@@ -36,7 +36,7 @@ public class RouteStationController {
     }
 
     @PostMapping("/saveOrUpdateRouteStation")
-    @ApiOperation(value = "Create Operations", response = VehicleDTO.class)
+    @ApiOperation(value = "Create Operations", response = RouteStationDTO.class)
     public ResponseEntity<JSONObject> saveOrUpdateRouteStation(@Valid @RequestBody RouteStationDTO routeStationDTO) throws Exception {
 
         JSONObject sendJSON = routeStationBUS.saveOrUpdateRouteStation(routeStationDTO, null);
@@ -45,7 +45,7 @@ public class RouteStationController {
         return ResponseEntity.ok(sendJSON);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/saveOrUpdateRouteStation/{id}")
     @ApiOperation(value = "Update Operations", response = RouteStationDTO.class)
     public ResponseEntity<JSONObject> saveOrUpdateRouteStation(@PathVariable(value = "id", required = true) Long id, @Valid @RequestBody RouteStationDTO routeStationDTO) throws Exception {
 

@@ -27,8 +27,6 @@ public class UsersBUS implements IUsersBUS{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-   /* @Autowired
-    private  BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
     @Override
     public UsersDTO getAllUsers() throws Exception {

@@ -17,7 +17,7 @@ public class RouteStationDAO extends BaseDAO {
 
         sql="select rs.ROUTE_STATION_ID as \"routeStationId\",r.ROUTE_NAME as \"routeName\",s.station_name as \"stationName\"";
         sql += "from ROUTE_STATION rs,Route r,Station s where rs.ROUTE_ID = r.ROUTE_ID and " +
-                " rs.station_id =s.station_id and rs.status=1 ";
+                " rs.station_id =s.station_id and rs.status=true ";
 
         Query query = getCurrentSession().createSQLQuery(sql);
         query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
@@ -31,7 +31,7 @@ public class RouteStationDAO extends BaseDAO {
             hql += "and v.routeStationId=:routeStationId";
         }
         if(routeId != null){
-            hql += " and v.stationId=:stationId";
+            hql += " and v.routeId=:routeId";
         }
 
         Query query = getCurrentSession().createQuery(hql.toString());

@@ -31,7 +31,7 @@ public class VehicleController {
 
     @ApiOperation(value ="Get Vehicle List",response = JSONObject.class)
     @GetMapping("/getVehicleList")
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USERS')")
     public ResponseEntity<JSONObject> getVehicleList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, String[]> requestMap = request.getParameterMap();
 
