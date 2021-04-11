@@ -44,6 +44,9 @@ public class VehicleBUS implements IVehicleBUS {
             vehicle = vehicleDAO.getCurrentSession().load(Vehicle.class, id);
         }
 
+        if(vehicle.getPlate() == null || vehicle.getPlate().equals("0")){
+            throw  new Exception("Plan girilmemiştir.!");
+        }
         vehicle.setVehicleName(vehicleDTO.getVehicleName());
         vehicle.setPlate(vehicleDTO.getPlate());
         vehicle.setStatus(true);
