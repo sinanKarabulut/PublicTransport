@@ -5,11 +5,14 @@ import {AppLayoutComponent} from "./_layout";
 import {StationComponent} from "./pages/station/station.component";
 import {VehicleComponent} from "./pages/vehicle/vehicle.component";
 import {StationVehicleComponent} from "./pages/station-vehicle/station-vehicle.component";
+import {RegisterComponent} from "./register/register.component";
+import {NotfoundComponent} from "./shared/notfound/notfound.component";
+import {AuthGuard} from "./security/auth-guard";
 
 const routes: Routes = [
   {
     path: "",
-    component: AppLayoutComponent,
+    component: AppLayoutComponent,canActivate: [AuthGuard],
     children: [
       {path: "station", component: StationComponent},
       {path: "vehicle", component: VehicleComponent},
@@ -18,6 +21,8 @@ const routes: Routes = [
     ]}
   ,
   {path: 'login', component:LoginComponent},
+  {path: 'register', component:RegisterComponent},
+  {path: '**', component: NotfoundComponent}
 ];
 
 @NgModule({
